@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./backend/robot.db:/app/robot.db
+    networks:
+      - robot-network
+
+  frontend:
+    build: ./frontend  
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - robot-network
+
+networks:
+  robot-network:
+    driver: bridge
